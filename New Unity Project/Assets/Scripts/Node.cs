@@ -7,44 +7,42 @@ using UnityEngine;
 // the gameObject through pointer
 public class Node
 {
-	// An important property of Node that will be used 
-	// to represent its distance to source Node
-	// in the dijkstra's algorithm
-    public int priority;
-    // name of the object on the graph
-    private string data;
-    // Adjacency list to track what are the neighbour of this node
-    private List<Edge> edges;
+	// Adjacency list of a Node is stored as dictionary where
+	// the keys are the neighboring node and the value is the weights
+	// to that neighbor
+	private Dictionary<Node, int> neighbor;	
+	// container for the data 
+	private string data;
+	// stores the priority of a node, this is used in dijkstra's algorithm
+	private int priority;
 
-	// An reference to gameObject it is pointing
-	public GameObject currentGameObject;
-    public Node(string inputData) {
-		this.data = inputData;
-		this.edges = new List<Edge>();
-		this.priority = 0;
-		currentGameObject = GameObject.Find(inputData);
-	}
-    
-    public void addEdge(Node endVertex, int weight) {
-		this.edges.Add(new Edge(this, endVertex, weight));
+
+	public Node(string data) {
+		this.data = data;
+		priority = 0;
 	}
 
-    public void removeEdge(Node endVertex) {
-		foreach(Edge edge in edges) {
-            if(edge.getEnd() == endVertex) {
-                edges.Remove(edge);
-            }
-        }
+	public int getPriority() {
+		return priority;
 	}
 
-	public string getData() {
-		return this.data;
+	
+	public void addNeighbor(Node destination, int weight) {
+		// add the destination to its neighbor
+		this.neighbor.Add(destination, weight);
 	}
 
-	public List<Edge> getEdges(){
-		return this.edges;
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 
-    
+	public void setData(string data) {
+		this.data = data;
+	}
 
+	public Dictionary<Node, int> getNeighbor() {
+		return neighbor;
+	}
+
+	
 }

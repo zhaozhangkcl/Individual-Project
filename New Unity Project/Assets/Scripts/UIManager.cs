@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject canva;
-    private Graph graph;
+    [SerializeField] private GameObject backGround;
+    [SerializeField] private Text distance;
+    [SerializeField] private Text displayPath;
+     private Graph graph;
 
     private Node startingNode;
 
@@ -46,6 +48,8 @@ public class UIManager : MonoBehaviour
 
     
 
+    
+
   
 
     public void OnSubmitStart(string startNode) {
@@ -54,20 +58,28 @@ public class UIManager : MonoBehaviour
     }
 
     public void OnSubmitDestination(string destinationNode) {
-        canva.SetActive(false);
+       delay(destinationNode);
+    }
+
+    public IEnumerator delay(string destinationNode) {
+         backGround.SetActive(false);
         Node destination = graph.getVertexByValue(destinationNode);
         // calculate the shortest path and save in a variable
         List<Node> path = Algorithm.shortestPathBetween(graph, startingNode, destination);
         // once we have the path, we will make the Node glow in a order to illustrate the direction should be taken
         // first, we need reference to each object, which we already have
         // iterate through the path, turn on the halo property, wait for 1.5 seconds, then turn it off again
+        displayPath.text = "";
         foreach(Node v in path) {
             Debug.Log(v.getData());
             GameObject obj = GameObject.Find(v.getData());
             Debug.Log(obj);
             // Display a text message UI on the game screen showing the shortest path
             // reference the UI
+            displayPath.text += v.getData() + ", ";
         }
+        // once the shortest path is calculated, distance should also be update on the left corner
+        distance.text = "The Shortest distance to " + destinationNode + " is " + Algorithm.dijkstra(graph, startingNode).Item1[destinationNode].ToString();
     }
    
 }

@@ -2,51 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
+Graph is implemented using the adjacency list
+data structure where each node keeps a list of
+its neighboring node and weights. The graph data structure
+allows functionality such as adding nodes and edges and also remove
+nodes and edges
+*/
 public class Graph
 {
-    // A instance variable for holding list of Vertex
-    private List<Node> vertices;
-   
-   public Graph() {
-       vertices =  new List<Node>();
-   }
+	private List<Node> nodes;
 
-   public Node addVertex(string data) {
-		Node newVertex = new Node(data);
-		this.vertices.Add(newVertex);
 
-		return newVertex;
+
+	public void addVertex(string data) {
+		// create a new node
+		Node v =  new Node(data);
+		// add it to the nodes storage
+		nodes.Add(v);
 	}
 
-    public void addEdge(Node vertex1, Node vertex2, int weight) {
-
-		vertex1.addEdge(vertex2, weight);		
-		vertex2.addEdge(vertex1, weight);
-		
-	}
-
-	public void removeEdge(Node vertex1, Node vertex2) {
-		vertex1.removeEdge(vertex2);
-		vertex2.removeEdge(vertex1);
-	}
-
-	public void removeVertex(Node vertex) {
-		this.vertices.Remove(vertex);
-	}
-
+	// getter for list of nodes of the graph
 	public List<Node> getVertices() {
-		return this.vertices;
+		return nodes;
 	}
 
-
-	public Node getVertexByValue(string value) {
-		foreach(Node v in vertices) { 
-			if (v.getData() == value) {
-				return v;
-			}
-		}
-
-		return null;
+	/*
+	Update both source and destionation's neighbor since this is
+	an undirected graph
+	*/
+	public void addEdge(Node source, Node destination, int cost) {
+		source.getNeighbor().Add(destination, cost);
+		destination.getNeighbor().Add(source, cost);
 	}
-
+   
 }
