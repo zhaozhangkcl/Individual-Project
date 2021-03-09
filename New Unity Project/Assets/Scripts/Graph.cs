@@ -32,8 +32,20 @@ public class Graph
 	an undirected graph
 	*/
 	public void addEdge(Node source, Node destination, int cost) {
-		source.getNeighbor().Add(destination, cost);
-		destination.getNeighbor().Add(source, cost);
+		source.addNeighbor(destination, cost);
+		destination.addNeighbor(source, cost);
+	}
+
+	/*
+	An auxiliary function that return a node with given data as its value
+	*/
+	public Node getNodeByValue(string data) {
+		foreach(Node v in nodes) {
+			if(v.getData() == data) {
+				return v;
+			}
+		}
+		return null;
 	}
    
 }

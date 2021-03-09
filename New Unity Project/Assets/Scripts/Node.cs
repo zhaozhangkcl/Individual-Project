@@ -13,17 +13,9 @@ public class Node
 	private Dictionary<Node, int> neighbor;	
 	// container for the data 
 	private string data;
-	// stores the priority of a node, this is used in dijkstra's algorithm
-	private int priority;
-
 
 	public Node(string data) {
 		this.data = data;
-		priority = 0;
-	}
-
-	public int getPriority() {
-		return priority;
 	}
 
 	
@@ -32,12 +24,13 @@ public class Node
 		this.neighbor.Add(destination, weight);
 	}
 
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
 
 	public void setData(string data) {
 		this.data = data;
+	}
+
+	public string getData() {
+		return data;
 	}
 
 	public Dictionary<Node, int> getNeighbor() {
