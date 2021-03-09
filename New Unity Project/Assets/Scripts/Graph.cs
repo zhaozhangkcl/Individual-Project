@@ -13,6 +13,10 @@ public class Graph
 {
 	private List<Node> nodes;
 
+	public Graph() {
+		nodes = new List<Node>();
+	}
+
 
 
 	public void addVertex(string data) {

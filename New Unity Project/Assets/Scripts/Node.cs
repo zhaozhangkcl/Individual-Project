@@ -16,6 +16,8 @@ public class Node
 
 	public Node(string data) {
 		this.data = data;
+		neighbor = new Dictionary<Node, int>();
+
 	}
 
 	

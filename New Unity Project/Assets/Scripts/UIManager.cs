@@ -24,10 +24,10 @@ public class UIManager : MonoBehaviour
     }
 
     public void addEdge() {
-        graph.addEdge(graph.getNodeByValue("Main Exit"), graph.getNodeByValue("Reception"), 3);
+        graph.addEdge(graph.getNodeByValue("Main Entrance"), graph.getNodeByValue("Reception"), 3);
         graph.addEdge(graph.getNodeByValue("Reception"), graph.getNodeByValue("Stair"), 2);
         graph.addEdge(graph.getNodeByValue("Stair"), graph.getNodeByValue("Toilet"), 2);
-        graph.addEdge(graph.getNodeByValue("Main Exit"), graph.getNodeByValue("North Wing Exit"), 5);
+        graph.addEdge(graph.getNodeByValue("Main Entrance"), graph.getNodeByValue("North Wing Exit"), 5);
         graph.addEdge(graph.getNodeByValue("Reception"), graph.getNodeByValue("North Wing Exit"), 3);
         graph.addEdge(graph.getNodeByValue("Stair"), graph.getNodeByValue("North Wing Exit"), 2);
         graph.addEdge(graph.getNodeByValue("Toilet"), graph.getNodeByValue("North Wing Exit"), 3);
@@ -36,13 +36,11 @@ public class UIManager : MonoBehaviour
 
     public void addVertex() {
         // add all the objects of given name to the collection
-        graph.getVertices().Add(new Node("North Wing Exit"));
-        graph.getVertices().Add(new Node("Main Exit"));
-        graph.getVertices().Add(new Node("Exit"));
-        graph.getVertices().Add(new Node("Main Entrance"));
-        graph.getVertices().Add(new Node("Toilet"));
-        graph.getVertices().Add(new Node("Reception"));
-        graph.getVertices().Add(new Node("Stair"));      
+        graph.addVertex("Main Entrance");
+        graph.addVertex("Reception");
+        graph.addVertex("Stair");
+        graph.addVertex("Toilet");
+        graph.addVertex("North Wing Exit");   
     }
 
     
