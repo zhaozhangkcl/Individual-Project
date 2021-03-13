@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject backGround;
     [SerializeField] private Text distance;
-    [SerializeField] private Text displayPath;
+
      private Graph graph;
 
     private Node startingNode;
@@ -44,7 +44,13 @@ public class UIManager : MonoBehaviour
     }
 
     
+    public void OnClickPlay() {
+        backGround.SetActive(true);
+    }
 
+    public void OnClickTutorial() {
+        
+    }
     
 
   
@@ -58,23 +64,46 @@ public class UIManager : MonoBehaviour
        delay(destinationNode);
     }
 
+    /*
+    Auxiliary function from https://answers.unity.com/questions/8338/how-to-draw-a-line-using-script.html
+    that helps to draw a line segment between two points
+    */
+    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.2f)
+         {
+             GameObject myLine = new GameObject();
+             myLine.transform.position = start;
+             myLine.AddComponent<LineRenderer>();
+             LineRenderer lr = myLine.GetComponent<LineRenderer>();
+             lr.startColor = color;
+             lr.endColor =color;
+             lr.startWidth = 0.5f;
+             lr.endWidth = 0.5f;
+             lr.SetPosition(0, start);
+             lr.SetPosition(1, end);
+            // GameObject.Destroy(myLine, duration);
+         }
+
     public void delay(string destinationNode) {
-         backGround.SetActive(false);
+        // set the user-prompt screen off
+        backGround.SetActive(false);
+        // switch on the green colour of the starting node
+        GameObject start = GameObject.Find(startingNode.getData());
+        start.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+        // switch on the destinationNode colour to red
         Node destination = graph.getNodeByValue(destinationNode);
+        GameObject finish = GameObject.Find(destination.getData());
+        finish.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         // calculate the shortest path and save in a variable
         List<Node> path = Algorithm.findShortestPath(graph, startingNode, destination);
         // once we have the path, we will make the Node glow in a order to illustrate the direction should be taken
         // first, we need reference to each object, which we already have
         // iterate through the path, turn on the halo property, wait for 1.5 seconds, then turn it off again
-        displayPath.text = "";
-        foreach(Node v in path) {
-            Debug.Log(v.getData());
-            GameObject obj = GameObject.Find(v.getData());
+        for(int i=0; i<path.Count-1; i++) {
+            Debug.Log(path[i].getData());
+            GameObject obj = GameObject.Find(path[i].getData());
             Debug.Log(obj);
-            // Display a text message UI on the game screen showing the shortest path
-            // reference the UI
-            displayPath.text += v.getData() + ", ";
-
+            // draw a line between all vertices in the path
+            DrawLine(obj.transform.position, GameObject.Find(path[i+1].getData()).transform.position, Color.blue);
         }
         // once the shortest path is calculated, distance should also be update on the left corner
         distance.text = "The Shortest distance to " + destinationNode + " is " + Algorithm.dijkstra(graph, startingNode).shortestDistanceEstimate[destination].ToString();

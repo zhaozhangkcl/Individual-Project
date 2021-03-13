@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Node.cs" />
      <Compile Include="Assets\Scripts\PriorityQueue.cs" />
      <Compile Include="Assets\Scripts\Record.cs" />
+     <Compile Include="Assets\Scripts\Stack.cs" />
      <Compile Include="Assets\Scripts\Tutorial.cs" />
      <Compile Include="Assets\Scripts\UIManager.cs" />
      <None Include="Assets\Scripts\GameAssembley.asmdef" />

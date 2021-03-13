@@ -8,6 +8,12 @@ namespace Tests
 {
     public class UnitTest
     {
+        // Unity Test for display of UI correctly for shortest distance
+        [UnityTest]
+        public void UIDisplayShortestDistanceCorrect() {
+
+            
+        }
         // A Test behaves as an ordinary method
         [Test]
         public void UnitTestSimplePasses()
