@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject backGround;
     [SerializeField] private Text distance;
 
-     private Graph graph;
+    private Graph graph;
 
     private Node startingNode;
+
+    // a toggle to displaying GUI elements
+    private bool isGUIVisible;
+
 
     void Start() {
         graphInit();
         addVertex();
         addEdge();
+        isGUIVisible = false;
     }
 
     public void graphInit() {
@@ -45,11 +50,12 @@ public class UIManager : MonoBehaviour
 
     
     public void OnClickPlay() {
+        isGUIVisible = false;
         backGround.SetActive(true);
     }
 
     public void OnClickTutorial() {
-        
+         SceneManager.LoadScene(sceneName:"Tutorial Scene");
     }
     
 
@@ -61,6 +67,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void OnSubmitDestination(string destinationNode) {
+       isGUIVisible = true; 
        delay(destinationNode);
     }
 
@@ -68,7 +75,7 @@ public class UIManager : MonoBehaviour
     Auxiliary function from https://answers.unity.com/questions/8338/how-to-draw-a-line-using-script.html
     that helps to draw a line segment between two points
     */
-    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.2f)
+    public void DrawLine(Vector3 start, Vector3 end, Color color)
          {
              GameObject myLine = new GameObject();
              myLine.transform.position = start;
@@ -80,8 +87,9 @@ public class UIManager : MonoBehaviour
              lr.endWidth = 0.5f;
              lr.SetPosition(0, start);
              lr.SetPosition(1, end);
-            // GameObject.Destroy(myLine, duration);
+             GameObject.Destroy(myLine, 5f);
          }
+
 
     public void delay(string destinationNode) {
         // set the user-prompt screen off
@@ -99,14 +107,28 @@ public class UIManager : MonoBehaviour
         // first, we need reference to each object, which we already have
         // iterate through the path, turn on the halo property, wait for 1.5 seconds, then turn it off again
         for(int i=0; i<path.Count-1; i++) {
-            Debug.Log(path[i].getData());
             GameObject obj = GameObject.Find(path[i].getData());
-            Debug.Log(obj);
             // draw a line between all vertices in the path
-            DrawLine(obj.transform.position, GameObject.Find(path[i+1].getData()).transform.position, Color.blue);
+            DrawLine(obj.transform.position, GameObject.Find(path[i+1].getData()).transform.position, Color.red);
         }
         // once the shortest path is calculated, distance should also be update on the left corner
         distance.text = "The Shortest distance to " + destinationNode + " is " + Algorithm.dijkstra(graph, startingNode).shortestDistanceEstimate[destination].ToString();
     }
+
+       // label each object in the list 
+        void OnGUI() {
+            if(isGUIVisible) {
+                List<Node> vertices = graph.getVertices();
+                foreach(Node v in vertices) {
+                    Debug.Log(v.getData());
+                    GameObject obj = GameObject.Find(v.getData());
+                    Rect display = new Rect(0,0,200,100);           
+                    Vector3 location = Camera.main.WorldToScreenPoint(obj.transform.position + new Vector3(0,0,0.5f));
+                    display.x = location.x;
+                    display.y = Screen.height - location.y - display.height;
+                    GUI.Box(display, new GUIContent(v.getData()));          
+                }
+            }
+        }
    
 }
