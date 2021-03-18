@@ -68,7 +68,21 @@ public class UIManager : MonoBehaviour
 
     public void OnSubmitDestination(string destinationNode) {
        isGUIVisible = true; 
-       delay(destinationNode);
+       StartCoroutine(displayColour(destinationNode));
+       StartCoroutine(displayHalo(destinationNode));
+    }
+
+    public IEnumerator displayHalo(string destinationNode) {
+        Node destination = graph.getNodeByValue(destinationNode);
+        // calculate the shortest path and save in a variable
+        List<Node> path = Algorithm.findShortestPath(graph, startingNode, destination);
+        foreach(Node v in path) {
+            GameObject obj = GameObject.Find(v.getData());
+            Behaviour halo = (Behaviour)obj.GetComponent("Halo");
+            halo.enabled = true;
+            yield return new WaitForSeconds(1f);
+            halo.enabled = false;
+        }
     }
 
     /*
@@ -81,25 +95,28 @@ public class UIManager : MonoBehaviour
              myLine.transform.position = start;
              myLine.AddComponent<LineRenderer>();
              LineRenderer lr = myLine.GetComponent<LineRenderer>();
+             lr.material = new Material(Shader.Find("Sprites/Default"));
              lr.startColor = color;
              lr.endColor =color;
              lr.startWidth = 0.5f;
              lr.endWidth = 0.5f;
              lr.SetPosition(0, start);
              lr.SetPosition(1, end);
-             GameObject.Destroy(myLine, 5f);
+             GameObject.Destroy(myLine,5f);
          }
 
 
-    public void delay(string destinationNode) {
+    public IEnumerator displayColour(string destinationNode) {
         // set the user-prompt screen off
         backGround.SetActive(false);
         // switch on the green colour of the starting node
         GameObject start = GameObject.Find(startingNode.getData());
+        start.GetComponent<Renderer>().material = new Material(Shader.Find("Sprites/Default"));
         start.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
         // switch on the destinationNode colour to red
         Node destination = graph.getNodeByValue(destinationNode);
         GameObject finish = GameObject.Find(destination.getData());
+        finish.GetComponent<Renderer>().material = new Material(Shader.Find("Sprites/Default"));
         finish.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         // calculate the shortest path and save in a variable
         List<Node> path = Algorithm.findShortestPath(graph, startingNode, destination);
@@ -109,8 +126,12 @@ public class UIManager : MonoBehaviour
         for(int i=0; i<path.Count-1; i++) {
             GameObject obj = GameObject.Find(path[i].getData());
             // draw a line between all vertices in the path
-            DrawLine(obj.transform.position, GameObject.Find(path[i+1].getData()).transform.position, Color.red);
+            DrawLine(obj.transform.position, GameObject.Find(path[i+1].getData()).transform.position, Color.blue);
         }
+        // wait for 5 seconds and reset the colors
+        yield return new WaitForSeconds(5f);
+        start.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
+        finish.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
         // once the shortest path is calculated, distance should also be update on the left corner
         distance.text = "The Shortest distance to " + destinationNode + " is " + Algorithm.dijkstra(graph, startingNode).shortestDistanceEstimate[destination].ToString();
     }
