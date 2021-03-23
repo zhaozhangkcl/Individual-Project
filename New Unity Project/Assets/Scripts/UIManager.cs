@@ -30,12 +30,22 @@ public class UIManager : MonoBehaviour
 
     public void addEdge() {
         graph.addEdge(graph.getNodeByValue("Main Entrance"), graph.getNodeByValue("Reception"), 3);
-        graph.addEdge(graph.getNodeByValue("Reception"), graph.getNodeByValue("Stair"), 2);
-        graph.addEdge(graph.getNodeByValue("Stair"), graph.getNodeByValue("Toilet"), 2);
-        graph.addEdge(graph.getNodeByValue("Main Entrance"), graph.getNodeByValue("North Wing Exit"), 5);
-        graph.addEdge(graph.getNodeByValue("Reception"), graph.getNodeByValue("North Wing Exit"), 3);
-        graph.addEdge(graph.getNodeByValue("Stair"), graph.getNodeByValue("North Wing Exit"), 2);
-        graph.addEdge(graph.getNodeByValue("Toilet"), graph.getNodeByValue("North Wing Exit"), 3);
+        graph.addEdge(graph.getNodeByValue("Reception"), graph.getNodeByValue("Office"), 2);
+        graph.addEdge(graph.getNodeByValue("Office"), graph.getNodeByValue("Toilet"), 2);
+        graph.addEdge(graph.getNodeByValue("Main Entrance"), graph.getNodeByValue("Exit"), 5);
+        graph.addEdge(graph.getNodeByValue("Reception"), graph.getNodeByValue("Exit"), 3);
+        graph.addEdge(graph.getNodeByValue("Office"), graph.getNodeByValue("Exit"), 2);
+        graph.addEdge(graph.getNodeByValue("Toilet"), graph.getNodeByValue("Exit"), 3);
+        graph.addEdge(graph.getNodeByValue("Exit"), graph.getNodeByValue("Lift0"), 2);
+        graph.addEdge(graph.getNodeByValue("Main Exit"), graph.getNodeByValue("Lift0"), 5);
+        graph.addEdge(graph.getNodeByValue("Lift1"), graph.getNodeByValue("Lift0"), 6);
+        graph.addEdge(graph.getNodeByValue("Front Desk"), graph.getNodeByValue("Lift0"), 4);
+        graph.addEdge(graph.getNodeByValue("Front Desk"), graph.getNodeByValue("Main Exit"), 8);
+        graph.addEdge(graph.getNodeByValue("Lift1"), graph.getNodeByValue("Lecture Room 1"), 4);
+        graph.addEdge(graph.getNodeByValue("Lift1"), graph.getNodeByValue("Lecture Room 2"), 8);
+        graph.addEdge(graph.getNodeByValue("Lift1"), graph.getNodeByValue("Lecture Room 3"), 4);
+        graph.addEdge(graph.getNodeByValue("Lecture Room 3"), graph.getNodeByValue("Lecture Room 1"), 3);
+        graph.addEdge(graph.getNodeByValue("Lecture Room 3"), graph.getNodeByValue("Lecture Room 2"), 3);
     }
 
 
@@ -43,9 +53,16 @@ public class UIManager : MonoBehaviour
         // add all the objects of given name to the collection
         graph.addVertex("Main Entrance");
         graph.addVertex("Reception");
-        graph.addVertex("Stair");
+        graph.addVertex("Office");
         graph.addVertex("Toilet");
-        graph.addVertex("North Wing Exit");   
+        graph.addVertex("Lift0"); 
+        graph.addVertex("Lift1");
+        graph.addVertex("Main Exit");
+        graph.addVertex("Exit");
+        graph.addVertex("Front Desk");
+        graph.addVertex("Lecture Room 1");
+        graph.addVertex("Lecture Room 2");
+        graph.addVertex("Lecture Room 3");
     }
 
     
@@ -133,7 +150,7 @@ public class UIManager : MonoBehaviour
         start.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
         finish.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
         // once the shortest path is calculated, distance should also be update on the left corner
-        distance.text = "The Shortest distance to " + destinationNode + " is " + Algorithm.dijkstra(graph, startingNode).shortestDistanceEstimate[destination].ToString();
+        distance.text = "The Shortest distance to " + destinationNode + " is " + Algorithm.dijkstra(graph, startingNode).shortestDistanceEstimate[destination].ToString() + " meters";
     }
 
        // label each object in the list 
