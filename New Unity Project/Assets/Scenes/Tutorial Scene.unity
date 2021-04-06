@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.9150943, g: 0.8978284, b: 0.8978284, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -366,10 +366,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Welcome to King's College London.\nCongradulation on getting into one of
-    the best Universities in the world. \nDon't worry, with this app, you will be
-    able to find your way around campuses. \nThis tutorial is designed to help you
-    use the app."
+  m_Text: "Welcome to King's College London.\nWith this app, you will be able to find
+    your way around campuses. \nPlease Use this Tutorial to guide you how to use this
+    app.\nEnjoy your trip in the campus!"
 --- !u!222 &292006165
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -428,7 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.8018868, g: 0.40850836, b: 0.40850836, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -798,6 +797,7 @@ MonoBehaviour:
   tutorialText: {fileID: 292006164}
   nextButton: {fileID: 1773440451}
   previousButton: {fileID: 739499717}
+  sprite: {fileID: 0}
 --- !u!1 &1750849181
 GameObject:
   m_ObjectHideFlags: 0

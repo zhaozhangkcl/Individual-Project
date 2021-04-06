@@ -8,21 +8,24 @@ namespace Tests
 {
     public class UnitTest
     {
-        // Unity Test for display of UI correctly for shortest distance
-        [UnityTest]
-        public void UIDisplayShortestDistanceCorrect() {
-
-            
-        }
-        // A Test behaves as an ordinary method
-        [Test]
-        public void UnitTestSimplePasses()
-        {
-            // Use the Assert class to test conditions
-        }
-
-        public void TestPQInsert() {
+       
+    
+        
+        public void TestPQ() {
+            // create a priority queue
             PriorityQueue testQueue = new PriorityQueue();
+            // create two nodes
+            Node q1 = new Node("I am number 1");
+            Node q2 = new Node("I am number 2");
+            // insert a node with priority 2
+            testQueue.enqueue(q2,2);
+            testQueue.enqueue(q1,1);
+            // call dequeue and save the result into a variable
+            int result = testQueue.dequeue().Item2;
+            // even though we inserted q2 first, because q1 has higher priority,
+            // it should still be returned to us
+            // now assert result equals to 1
+            Assert.AreEqual(1,result);
 
         }
         /*

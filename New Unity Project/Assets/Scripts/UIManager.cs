@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject backGround;
     [SerializeField] private Text distance;
 
+    [SerializeField] private Dropdown startDropDown;
+    [SerializeField] private Dropdown destinationDropDown;
     private Graph graph;
 
     private Node startingNode;
@@ -17,15 +19,30 @@ public class UIManager : MonoBehaviour
 
 
     void Start() {
+        backGround.SetActive(false);
         graphInit();
         addVertex();
         addEdge();
-        isGUIVisible = false;
+        isGUIVisible = true;
+        addOption();
+    }
+
+    public void addOption() {
+        // add all of the vertices to start drop down
+        foreach(Node room in graph.getVertices()) {
+            startDropDown.options.Add(new Dropdown.OptionData() {text=room.getData()});
+            // also add all the room to destinationDropDown
+            destinationDropDown.options.Add(new Dropdown.OptionData() {text=room.getData()});
+        }
     }
 
     public void graphInit() {
         graph = new Graph();
         
+    }
+
+    public void quitGame() {
+        Application.Quit();
     }
 
     public void addEdge() {
@@ -164,7 +181,9 @@ public class UIManager : MonoBehaviour
                     Vector3 location = Camera.main.WorldToScreenPoint(obj.transform.position + new Vector3(0,0,0.5f));
                     display.x = location.x;
                     display.y = Screen.height - location.y - display.height;
-                    GUI.Box(display, new GUIContent(v.getData()));          
+                    //GUIStyle border = new GUIStyle(GUI.skin.label);
+                    //border.margin = new RectOffset(10,10,10,10);
+                    GUI.Label(display, v.getData());          
                 }
             }
         }
