@@ -122,7 +122,7 @@ public class UIManager : MonoBehaviour
     /*
     Auxiliary function from https://answers.unity.com/questions/8338/how-to-draw-a-line-using-script.html
     that helps to draw a line segment between two points
-    */
+    */ 
     public void DrawLine(Vector3 start, Vector3 end, Color color)
          {
              GameObject myLine = new GameObject();
@@ -175,7 +175,8 @@ public class UIManager : MonoBehaviour
             if(isGUIVisible) {
                 List<Node> vertices = graph.getVertices();
                 foreach(Node v in vertices) {
-                    Debug.Log(v.getData());
+                    var style = new GUIStyle();
+                    style.fontSize = 50;
                     GameObject obj = GameObject.Find(v.getData());
                     Rect display = new Rect(0,0,200,100);           
                     Vector3 location = Camera.main.WorldToScreenPoint(obj.transform.position + new Vector3(0,0,0.5f));
@@ -183,7 +184,7 @@ public class UIManager : MonoBehaviour
                     display.y = Screen.height - location.y - display.height;
                     //GUIStyle border = new GUIStyle(GUI.skin.label);
                     //border.margin = new RectOffset(10,10,10,10);
-                    GUI.Label(display, v.getData());          
+                    GUI.Label(display, v.getData(), style);          
                 }
             }
         }

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+/*
+Part of the Code here are originated from website: https://answers.unity.com/questions/1569855/search-in-dropdown-options.html
+*/
 public class DropDownLogic : MonoBehaviour
  {
      [SerializeField]
@@ -25,7 +28,6 @@ public class DropDownLogic : MonoBehaviour
      public void FilterStartDropdown(string data)
      {
          startDropDown.options = startdropdownOptions.FindAll(word => word.text.IndexOf(data) >= 0);
-         
      }
 
      public void FilterDestinationDropDown(string data) {

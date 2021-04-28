@@ -10,7 +10,7 @@ namespace Tests
     {
        
     
-        
+        [Test]
         public void TestPQ() {
             // create a priority queue
             PriorityQueue testQueue = new PriorityQueue();
@@ -26,15 +26,14 @@ namespace Tests
             // it should still be returned to us
             // now assert result equals to 1
             Assert.AreEqual(1,result);
-
         }
         /*
         This unit test is very similiar to the test for distance
         Since we are doing unit testing, its good idea to test for different 
         things in a separate function
         */
-        [UnityTest]
-        public IEnumerator TestPathEqualToTarget() {
+        [Test]
+        public void TestPathEqualToTarget() {
             Graph g = new Graph();
             g.addVertex("Start");
             g.addVertex("Finish");
@@ -47,7 +46,6 @@ namespace Tests
             List<Node> shortestPath = Algorithm.findShortestPath(g, g.getNodeByValue("Start"), g.getNodeByValue("Finish"));
             List<Node> target = new List<Node>() {g.getNodeByValue("Start"), g.getNodeByValue("Intermediate"), g.getNodeByValue("Finish")};
             CollectionAssert.AreEqual(shortestPath, target);
-            yield return null;
         }
 
         /*
@@ -58,8 +56,8 @@ namespace Tests
         we are going to test that separately in Integration testing when
         we want to see if Model-View-Controller are working correctly
         */
-        [UnityTest]
-        public IEnumerator TestDistanceEqualToTarget()
+        [Test]
+        public void TestDistanceEqualToTarget()
         {
             // the truth asserts if final calculated distance 
             // should equals to distance returned by algorithm
@@ -81,9 +79,9 @@ namespace Tests
             // start and finish which we know prior hand is 9
             Dictionary<Node, int> shortestDistanceDictionary = Algorithm.dijkstra(g, g.getNodeByValue("Start")).shortestDistanceEstimate;
             int shortestDistance = shortestDistanceDictionary[g.getNodeByValue("Finish")];
+            int expectedResult = 9;
             // use assert function to check if shortestDistane equals to 9
-            Assert.AreEqual(shortestDistance, 9);
-            yield return null;
+            Assert.AreEqual(shortestDistance, expectedResult);
         }
 
         
